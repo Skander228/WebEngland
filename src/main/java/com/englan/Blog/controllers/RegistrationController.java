@@ -28,13 +28,14 @@ public class RegistrationController {
     }
 
     @PostMapping("/registration")
-    public String usersAdd(@RequestParam String firstName,
+    public String usersAdd(@RequestParam String user,
+                           @RequestParam String firstName,
                            @RequestParam String lastName,
                            @RequestParam String password,
                            @RequestParam String email,
-                           @RequestParam String city, /*User user,*/ Model model) {
+                           @RequestParam String city, Model model) {
 
-        User users = new User(firstName, lastName, password, email, city);
+        User users = new User(user, firstName, lastName, password, email, city);
 
         //User userFromDb = userRepository.findByEmail(user.getEmail());
 /*if (userFromDb != null) {
@@ -46,6 +47,6 @@ public class RegistrationController {
         users.setRoles(Collections.singleton(Role.USER));
         userRepository.save(users);
 
-        return "registration";
+        return "redirect:/login";
     }
 }

@@ -12,8 +12,18 @@
 <main>
     <div class="col-md-7 col-lg-8 mx-auto">
         <h1 class="mb-3">Регестрация</h1>
-        <form action="/registration" method="post" class="needs-validation was-validated" novalidate="">
+        <form th:action="registration" method="post" class="needs-validation was-validated" novalidate="">
             <div class="row g-3">
+
+                <div class="col-12">
+                    <label class="form-label">User name</label>
+                    <div class="input-group has-validation">
+                        <input type="text" class="form-control" name="user" placeholder="Maria1234" required="">
+                        <div class="invalid-feedback">
+                            Требуется пользовательское имя.
+                        </div>
+                    </div>
+                </div>
 
                 <div class="col-sm-6">
                     <label for="firstName" class="form-label">Имя</label>
@@ -51,7 +61,7 @@
                 <div class="col-12">
                     <label for="email" class="form-label">Email</label>
                     <input type="email" class="form-control" id="email" name="email" placeholder="you@example.com">
-                    <div class="invalid-feedback" th:text="${massage}">
+                    <div class="invalid-feedback">
                         Пожалуйста, введите действующий адрес электронной почты для отправки обновлений.
                     </div>
                 </div>
@@ -67,7 +77,6 @@
                 </div>
             </div>
             <hr class="my-4">
-            <input type="hidden" name="_csrf" value="{{_csrf.token}}"/>
             <button class="w-100 btn btn-primary btn-lg" type="submit">Продолжить</button>
         </form>
     </div>

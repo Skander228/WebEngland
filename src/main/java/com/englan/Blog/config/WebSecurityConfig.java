@@ -20,23 +20,27 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         //передаем на вход объект
         http
-                //Вкулючения авторизации
-                .authorizeRequests()
-                //Указываем что для данной страницы дан полный доступ
-                .antMatchers("/main", "/registration").permitAll()
-                //Для всех остальных запросов мы требуем авторизацию
-                .anyRequest().authenticated()
+                    //Вкулючения авторизации
+                    .authorizeRequests()
+                    //Указываем что для данной страницы дан полный доступ
+                    .antMatchers("/main", "/registration").permitAll()
+                    //Для всех остальных запросов мы требуем авторизацию
+                    .anyRequest().authenticated()
                 .and()
-                //включаем форму логин
-                .formLogin()
-                //Указываем что форма лагин указываеться на таком мепинге
-                .loginPage("/login")
-                //Разрешаем этим пользоваться всем
-                .permitAll()
+                    //включаем форму логин
+                    .formLogin()
+                    //Указываем что форма лагин указываеться на таком мепинге
+                    .loginPage("/login")
+                    .usernameParameter("user")
+                    .passwordParameter("password")
+                    .loginProcessingUrl("/login")
+                    .failureUrl("/?authError")
+                    //Разрешаем этим пользоваться всем
+                    .permitAll()
                 .and()
-                //Включаем логаун и разрешаем пользоваться всем
-                .logout()
-                .permitAll();
+                    //Включаем логаун и разрешаем пользоваться всем
+                    .logout()
+                    .permitAll();
     }
 
     @Override
@@ -44,7 +48,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         auth.jdbcAuthentication()
                 .dataSource(dataSource)
                 .passwordEncoder(NoOpPasswordEncoder.getInstance())
-                .usersByUsernameQuery("select firstName, lastName, email, password, city, active from usr where email=?")
-                .authoritiesByUsernameQuery("select e.email, r.roles from usr e inner join user_role r on e.id = r.user_id where e.email=?");
+                .usersByUsernameQuery("select user, password, active from usr where user=?")
+                .authoritiesByUsernameQuery("select u.user, r.roles from usr u inner join user_role r on u.id = r.user_id where u.user=?");
     }
 }

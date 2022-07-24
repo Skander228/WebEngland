@@ -21,22 +21,23 @@
 <body class="text-center">
 <main class="form-signin w-100 m-auto" style="max-width: 330px;
             padding: 15px; margin: auto!important; width: 100%!important;">
-  <form method="post">
+
+  <form th:action="@{/login}" method="post">
     <h1 class="h3 mb-3 fw-normal">Пожалуйста войдите</h1>
 
     <div class="form-floating">
-      <input type="email"  class="form-control" id="floatingInput" name="email" placeholder="name@example.com">
-      <label for="floatingInput">Email address</label>
+      <input th:type="text"  class="form-control" id="floatingInput" th:name="user" placeholder="Skander228">
+      <label for="floatingInput">User name</label>
     </div>
 
     <div class="form-floating">
-      <input type="password" class="form-control" id="floatingPassword" name="password" placeholder="Password">
+      <input th:type="password" class="form-control" id="floatingPassword" th:name="password" placeholder="Password">
       <label for="floatingPassword">Password</label>
     </div>
 
     <div class="checkbox mb-3"></div>
-    <input type="hidden" name="_csrf" value="{{_csrf.token}}"/>
-    <button class="w-100 btn btn-lg btn-primary" type="submit">Войти</button>
+    <button class="w-100 btn btn-lg btn-primary" th:type="submit">Войти</button>
+
   </form>
 </main>
 </body>

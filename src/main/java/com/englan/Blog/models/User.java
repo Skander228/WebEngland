@@ -9,6 +9,7 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    private String user;
     private String password;
     private String firstName;
     private String lastName;
@@ -21,6 +22,7 @@ public class User {
     @Enumerated(EnumType.STRING)
     private Set<Role> roles;
 
+    public User() {}
 
     public Long getId() {
         return id;
@@ -86,15 +88,21 @@ public class User {
         this.roles = roles;
     }
 
-    public User() {
-
+    public void setUser(String user) {
+        this.user = user;
     }
 
-    public User(String firstName,
+    public String getUser() {
+        return user;
+    }
+
+    public User(String user,
+                String firstName,
                 String lastName,
                 String password,
                 String email,
                 String city) {
+        this.user = user;
         this.firstName = firstName;
         this.lastName = lastName;
         this.password = password;
