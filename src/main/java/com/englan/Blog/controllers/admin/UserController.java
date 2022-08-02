@@ -17,16 +17,15 @@ public class UserController {
 
     @GetMapping("/admin/users")
     public String users(Model model) {
-        Iterable<User> users = userRepository.findAllByOrderByIdDesc();
+        Iterable<User> users = userRepository.findAll();
         model.addAttribute("users", users);
         return "admin/users";
     }
 
     @PostMapping("/admin/users")
-    public String usersDelete(@RequestParam long delId, Model model) {
-        long l = 11;
-        User user = userRepository.findById(l).orElseThrow();
+    public String usersDelete(@RequestParam Long del, Model model) {
+        User user = userRepository.findById(del).orElseThrow();
         userRepository.delete(user);
-        return "redirect:/main";
+        return "admin/users";
     }
 }

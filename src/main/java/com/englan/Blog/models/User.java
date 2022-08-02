@@ -1,15 +1,19 @@
 package com.englan.Blog.models;
 
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
 import javax.persistence.*;
+import java.util.Collection;
 import java.util.Set;
 
 @Entity
 @Table(name = "usr")
-public class User {
+public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private String user;
+    private String usern;
     private String password;
     private String firstName;
     private String lastName;
@@ -22,7 +26,22 @@ public class User {
     @Enumerated(EnumType.STRING)
     private Set<Role> roles;
 
+
     public User() {}
+
+    public User(String usern,
+                String firstName,
+                String lastName,
+                String password,
+                String email,
+                String city) {
+        this.usern = usern;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.password = password;
+        this.email = email;
+        this.city = city;
+    }
 
     public Long getId() {
         return id;
@@ -30,10 +49,6 @@ public class User {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getPassword() {
-        return password;
     }
 
     public void setPassword(String password) {
@@ -72,7 +87,7 @@ public class User {
         this.city = city;
     }
 
-    public boolean getActive() {
+    public boolean isActive() {
         return active;
     }
 
@@ -88,26 +103,48 @@ public class User {
         this.roles = roles;
     }
 
-    public void setUser(String user) {
-        this.user = user;
+    public void setUser(String usern) {
+        this.usern = usern;
     }
 
     public String getUser() {
-        return user;
+        return usern;
     }
 
-    public User(String user,
-                String firstName,
-                String lastName,
-                String password,
-                String email,
-                String city) {
-        this.user = user;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.password = password;
-        this.email = email;
-        this.city = city;
+
+    //UserDetails
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return getRoles();
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    @Override
+    public String getUsername() {
+        return null;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return isActive();
     }
 
 }
