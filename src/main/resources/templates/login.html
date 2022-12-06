@@ -10,6 +10,13 @@
 <main class="form-signin w-100 m-auto" style="max-width: 330px;
             padding: 15px; margin: auto!important; width: 100%!important;">
 
+  <div th:if="${param.error}">
+    Invalid username and password.
+  </div>
+  <div th:if="${param.logout}">
+    You have been logged out.
+  </div>
+
   <form th:action="@{/login}" method="post">
     <h1 class="h3 mb-3 fw-normal">Пожалуйста войдите</h1>
 

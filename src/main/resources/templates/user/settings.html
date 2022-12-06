@@ -11,13 +11,26 @@
 <main>
     <div class="col-md-7 col-lg-8 mx-auto">
         <h1 class="mb-3">Настройки</h1>
-        <form method="post" class="needs-validation was-validated" novalidate="">
+        <form th:action="settings" method="post" class="needs-validation was-validated" novalidate="">
             <div th:each="el : ${users}" class="row g-3">
+
+                <div class="col-12">
+                    <label for="city" class="form-label">User name</label>
+                    <div class="input-group has-validation">
+                        <input type="text" class="form-control" id="usern" name="usern" th:value="${el.usern}" required="">
+                        <div class="invalid-feedback">
+                            <div th:text="${error_name}"></div>
+                            <div th:text="${name_error}"></div>
+                            Требуется User name.
+                        </div>
+                    </div>
+                </div>
 
                 <div class="col-sm-6">
                     <label for="firstName" class="form-label">Имя</label>
                     <input type="text" class="form-control" id="firstName" name="firstName" th:value="${el.firstName}" required="">
                     <div class="invalid-feedback">
+                        <div th:text="${firstName_error}"></div>
                         Требуется имя.
                     </div>
                 </div>
@@ -26,6 +39,7 @@
                     <label for="lastName" class="form-label">Фамилия</label>
                     <input type="text" class="form-control" id="lastName" name="lastName" th:value="${el.lastName}" required="">
                     <div class="invalid-feedback">
+                        <div th:text="${lastName_error}"></div>
                         Требуется фамилия.
                     </div>
                 </div>
@@ -34,14 +48,16 @@
                     <label for="firstName" class="form-label">Введите новый пароль</label>
                     <input type="password" class="form-control" id="password_1" name="password" placeholder="Password" value="" required="">
                     <div class="invalid-feedback">
+                        <div th:text="${password_error}"></div>
                         Требуется пароль.
                     </div>
                 </div>
 
                 <div class="col-sm-6">
                     <label for="lastName" class="form-label">Повторите пароль</label>
-                    <input type="password" class="form-control" id="password_2" placeholder="Password" value="" required="">
+                    <input type="password" class="form-control" id="password_2" name="password_2" placeholder="Password" value="" required="">
                     <div class="invalid-feedback">
+                        <div th:text="${password_err}"></div>
                         Требуется пароль.
                     </div>
                 </div>
@@ -52,6 +68,8 @@
                     <div class="invalid-feedback">
                         Пожалуйста, введите действующий адрес электронной почты для отправки обновлений.
                     </div>
+                    <div class="text-danger" th:text="${error_email}"></div>
+                    <div class="text-danger" th:text="${email_error}"></div>
                 </div>
 
                 <div class="col-12">
@@ -59,13 +77,13 @@
                     <div class="input-group has-validation">
                         <input type="text" class="form-control" id="city" name="city" th:value="${el.city}" required="">
                         <div class="invalid-feedback">
+                            <div th:text="${city_error}"></div>
                             Требуется Город.
                         </div>
                     </div>
                 </div>
             </div>
             <hr class="my-4">
-            <input type="hidden" name="_csrf" value="{{_csrf.token}}"/>
             <button class="w-100 btn btn-primary btn-lg" type="submit">Изменить</button>
         </form>
     </div>

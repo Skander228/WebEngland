@@ -102,13 +102,11 @@ public class User implements UserDetails {
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
     }
-
-    public void setUser(String usern) {
-        this.usern = usern;
-    }
-
-    public String getUser() {
+    public String getUsern() {
         return usern;
+    }
+    public void setUsern(String usern) {
+        this.usern = usern;
     }
 
 

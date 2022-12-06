@@ -1,21 +1,30 @@
 package com.englan.Blog.models;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class Baby {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private Long userId;
     private String babyName;
     private String babySurname;
-    private String email;
 
+    @ManyToOne(fetch = FetchType.EAGER)
+    @CollectionTable(name = "usr", joinColumns = @JoinColumn(name = "user_id"))
+    private User userId;
 
+    public Baby() {
+
+    }
+
+    public Baby(String babyName, String babySurname, User userId) {
+        this.babyName = babyName;
+        this.babySurname = babySurname;
+        this.userId = userId;
+    }
+
+    public Long getUserId() { return userId != null ? userId.getId() : -1;}
 
     public Long getId(){
         return id;
@@ -23,14 +32,6 @@ public class Baby {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public Long getUserId() {
-        return userId;
-    }
-
-    public void setUserId() {
-        this.userId = userId;
     }
 
     public String getBabyName() {
@@ -47,13 +48,5 @@ public class Baby {
 
     public void setBabySurname(String babySurname) {
         this.babySurname = babySurname;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail() {
-        this.email = email;
     }
 }
